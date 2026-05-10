@@ -1,0 +1,216 @@
+# Book Analytics API
+
+A REST API built with FastAPI for managing and analyzing personal reading data stored in a CSV dataset.
+
+The project combines backend API development with data analysis workflows using Pandas.
+
+---
+
+## Features
+
+- Retrieve books by author
+- Filter books dynamically using query parameters
+- Pagination support
+- Author-level analytics
+- Global reading analytics
+- Data validation using Pydantic schemas
+- CSV-based data source
+
+---
+
+## Project Structure
+
+```text
+book-api/
+├── data/
+│   └── book_database.csv
+├── app/
+│   ├── __init__.py
+│   ├── analytics.py
+│   ├── database.py
+│   ├── main.py
+│   ├── schemas.py
+│   └── utils.py
+├── tests/
+│   └── __init__.py   # optional, helps treat tests as a package later
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Technologies Used
+
+- Python
+- FastAPI
+- Pandas
+- Pydantic
+- Uvicorn
+
+---
+
+## Installation
+
+1. Clone the repository
+
+```powershell
+git clone <your-repository-url>
+cd book-api
+```
+
+2. Create and activate a virtual environment
+
+**Windows**
+
+```powershell
+python -m venv venv
+venv\Scripts\activate
+```
+
+**Linux / macOS**
+
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+3. Install dependencies
+
+```powershell
+pip install -r requirements.txt
+```
+
+---
+
+## Running the API
+
+Run the development server using Uvicorn:
+
+```powershell
+uvicorn app.main:app --reload
+```
+
+The API will be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+Interactive API documentation:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+## API Endpoints
+
+**Get all books**
+
+```text
+GET /books
+```
+
+**Optional query parameters**
+
+- `author`: Filter by author
+- `category`: Filter by category
+- `status`: Filter by reading status
+- `language`: Filter by language
+- `limit`: Number of records to return
+- `offset`: Pagination offset
+
+**Example**
+
+```text
+/books?author=Murakami&status=Completed&limit=5
+```
+
+### Get books by author
+
+```text
+GET /books/{author_name}
+```
+
+**Example**
+
+```text
+/books/Murakami
+```
+
+### Get analytics by author
+
+```text
+GET /books/analytics/{author_name}
+```
+
+**Example response**
+
+```json
+{
+  "author_name": "Haruki Murakami",
+  "avg_reading_speed_days": 24.67,
+  "unit": "days_per_book",
+  "book_count": 3
+}
+```
+
+### Get global analytics
+
+```text
+GET /books/analytics
+```
+
+```json
+Example response
+{
+  "book_count": 25,
+  "completed_book_count": 20,
+  "avg_reading_speed_days": 18.4,
+  "avg_pages_per_day": 32.8
+}
+```
+---
+
+## Data Source
+
+The API uses a CSV file as the data source. The dataset contains information such as:
+
+- Book title
+- Author
+- Reading dates
+- Reading status
+- Score
+- Language
+- Category
+- Publication year
+
+---
+
+## Future Improvements
+
+Potential future improvements for the project:
+
+- SQLite or PostgreSQL integration
+- CRUD operations
+- Authentication
+- Sorting endpoints
+- Additional analytics
+- Docker support
+- Unit testing
+
+---
+
+## Learning Goals
+
+This project was developed to practice:
+
+- REST API development
+- FastAPI fundamentals
+- Data validation with Pydantic
+- Data analysis with Pandas
+- Backend project structure
+- Query parameters and pagination
+
+---
